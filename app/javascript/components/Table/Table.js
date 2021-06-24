@@ -1,6 +1,7 @@
 import React from "react";
 
 function Table(props) {
+
   return (
     <table className="table boarder shadow">
       <thead className="table-dark">
@@ -14,7 +15,7 @@ function Table(props) {
       <tbody>
         {props.imagesList.map((data, index) => (
           <tr key={index}>
-            <th scop="row">{index+1}</th>
+            <th scop="row">{index + 1}</th>
             <td>{data.attributes.name}</td>
             <td>
               <img
