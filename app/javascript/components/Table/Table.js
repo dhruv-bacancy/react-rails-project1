@@ -13,7 +13,7 @@ function Table(props) {
       </thead>
       <tbody>
         {props.imagesList.map((data, index) => (
-          <tr>
+          <tr key={index}>
             <th scop="row">{index+1}</th>
             <td>{data.attributes.name}</td>
             <td>
