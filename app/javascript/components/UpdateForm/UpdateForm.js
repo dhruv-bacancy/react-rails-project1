@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 
 function UpdateForm(props) {
   const [image, setImage] = useState({
@@ -20,6 +21,11 @@ function UpdateForm(props) {
       image_url: "",
       description: "",
     });
+  };
+
+  const history = useHistory();
+  const clickHandler = () => {
+    history.goBack;
   };
 
   return (

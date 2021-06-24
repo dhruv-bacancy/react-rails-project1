@@ -1,7 +1,9 @@
 import React from "react";
+import { useHistory } from 'react-router-dom';
 
 function Table(props) {
 
+  const history = useHistory();
   const trash = (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -23,6 +25,10 @@ function Table(props) {
     props.deleteHandler(id);
   };
 
+  const clickHandler = (id) => {
+    history.push(`/image/${id}`);
+  };
+
   return (
     <table className="table boarder shadow">
       <thead className="table-dark text-center">
@@ -36,7 +42,7 @@ function Table(props) {
       </thead>
       <tbody>
         {props.imagesList.map((data, index) => (
-          <tr key={index}>
+          <tr key={index} onClick={() => clickHandler(data.id)}>
             <th scop="row">{index + 1}</th>
             <td>{data.attributes.name}</td>
             <td>
