@@ -1,7 +1,7 @@
 module Api
   module V1
     class ImagesController < ApplicationController
-
+      protect_from_forgery with: :null_session
       def index
         images = Image.all
         
@@ -48,6 +48,7 @@ module Api
 
       def image_params
         params.require(:image).permit(:name, :image_url, :description)
+      end
     end
   end
 end
