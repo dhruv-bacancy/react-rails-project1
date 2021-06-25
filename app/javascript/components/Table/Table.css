@@ -1,0 +1,8 @@
+#img {
+  transition: transform 500ms ease-in-out;
+}
+
+#img:hover {
+  border-radius: 5%;
+  transform: scale(1.5);
+}

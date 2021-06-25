@@ -1,5 +1,6 @@
 import React from "react";
 import { useHistory } from 'react-router-dom';
+import "./Table.css"
 
 function Table(props) {
 
@@ -30,7 +31,7 @@ function Table(props) {
   };
 
   return (
-    <table className="table boarder shadow">
+    <table className="table boarder shadow table-hover table-responsive">
       <thead className="table-dark text-center">
         <tr>
           <th scope="col">#</th>
@@ -43,13 +44,14 @@ function Table(props) {
       <tbody>
         {props.imagesList.map((data, index) => (
           <tr key={index} onClick={() => clickHandler(data.id)}>
-            <th scop="row">{index + 1}</th>
+            <th scop="row" className="text-center">{index + 1}</th>
             <td>{data.attributes.name}</td>
-            <td>
+            <td className="text-center">
               <img
                 style={{ width: "150px", height: "150px" }}
                 src={data.attributes.image_url}
                 alt={data.attributes.name}
+                id="img"
               />
             </td>
             <td>{data.attributes.description}</td>

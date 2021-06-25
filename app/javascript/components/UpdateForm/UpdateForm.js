@@ -29,7 +29,7 @@ function UpdateForm(props) {
   };
 
   return (
-    <div className="col-md-6" style={{ float: "right", padding: "20px" }}>
+    <div className="col-md-6 shadow border rounded" style={{ float: "right", padding: "20px" }}>
       <form onSubmit={handleSubmit}>
         <h3 className="text-center">Update Image</h3>
         <div className="form-group">
