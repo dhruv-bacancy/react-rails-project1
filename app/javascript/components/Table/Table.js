@@ -22,7 +22,9 @@ function Table(props) {
     </svg>
   );
 
-  const deleteHandler = (id) => {
+  const deleteHandler = (event,id) => {
+    // event.preventDefault();
+    event.stopPropagation();
     props.deleteHandler(id);
   };
 
@@ -58,7 +60,7 @@ function Table(props) {
             <td className="text-center">
               <button
                 className="btn btn-outline-dark btn-sm"
-                onClick={() => deleteHandler(data.id)}
+                onClick={(event) => deleteHandler(event,data.id)}
               >
                 {trash}
               </button>

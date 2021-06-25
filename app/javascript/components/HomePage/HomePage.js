@@ -1,11 +1,11 @@
 import React, { useState, useEffect, Fragment } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
 import Table from "../Table/Table";
 
 function HomePage() {
   const [imageData, setImageData] = useState([]);
-
+  const history = useHistory();
   useEffect(() => {
     axios.get("http://localhost:3000/api/v1/images.json").then((response) => {
       setImageData(response.data.data);

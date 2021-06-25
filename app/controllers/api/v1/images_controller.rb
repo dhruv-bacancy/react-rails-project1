@@ -9,9 +9,14 @@ module Api
       end
 
       def show
-        image = Image.find(params[:id])
+        if(Image.exists?(params[:id])) 
+          image = Image.find(params[:id])
         
-        render json: ImageSerializer.new(image).serialized_json
+          render json: ImageSerializer.new(image).serialized_json
+        else
+          render json: {present: false}
+        end
+        
       end
 
       def create

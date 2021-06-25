@@ -9,6 +9,7 @@ function Image(props) {
     description: "",
   });
   const [isLoaded, setIsLoaded] = useState(false);
+  const [noData, setNoData] = useState(false);
 
   const csrfToken = document.querySelector("[name=csrf-token]").content;
   axios.defaults.headers.common["X-CSRF-TOKEN"] = csrfToken;
@@ -19,8 +20,12 @@ function Image(props) {
     axios
       .get(url)
       .then((response) => {
-        setImage(response.data.data.attributes);
-        setIsLoaded(true);
+        if(response.data.present == false) {
+          setNoData(true);
+        } else {
+          setImage(response.data.data.attributes);
+          setIsLoaded(true);
+        }
       })
       .catch((response) => console.log(response));
   }, []);
@@ -34,6 +39,10 @@ function Image(props) {
       .then((resp) => console.log(resp))
       .catch((resp) => console.log(resp));
   };
+
+  if(noData) {
+    return <h1 className="alert alert-danger mt-5" role="alert">No Data Present</h1>
+  }
 
   return (
     <Fragment>
