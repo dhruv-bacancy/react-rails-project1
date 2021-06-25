@@ -25,12 +25,13 @@ function UpdateForm(props) {
 
   const history = useHistory();
   const clickHandler = () => {
-    history.goBack;
+    history.goBack();
   };
 
   return (
     <div className="col-md-6" style={{ float: "right", padding: "20px" }}>
       <form onSubmit={handleSubmit}>
+        <h3 className="text-center">Update Image</h3>
         <div className="form-group">
           <label htmlFor="name">Image Name</label>
           <input
@@ -70,9 +71,17 @@ function UpdateForm(props) {
             />
           </div>
         </div>
-        <div className="text-center" style={{marginTop: '10px'}}>
+        <div className="text-center" style={{ marginTop: "10px" }}>
           <button type="submit" className="btn btn-lg btn-primary text-center">
             Submit
+          </button>
+          <button
+            type="button"
+            className="btn btn-lg btn-secondary text-center"
+            onClick={clickHandler}
+            style={{marginLeft: '10px'}}
+          >
+            Back
           </button>
         </div>
       </form>

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useHistory } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 
 function CreateForm() {
   const [image, setImage] = useState({
@@ -22,12 +22,16 @@ function CreateForm() {
       .post("http://localhost:3000/api/v1/images", image)
       .then((resp) => console.log(resp))
       .catch((resp) => console.log(resp));
-    history.goBack();    
+    history.goBack();
   };
 
+  const handleClick = () => {
+    history.goBack();
+  };
   return (
-    <div>
+    <div className="container  col-md-8" style={{marginTop: '30px'}}>
       <form onSubmit={handleSubmit}>
+        <h2 className="text-center">Create New Image</h2>
         <div className="form-group">
           <label htmlFor="name">Image Name</label>
           <input
@@ -70,6 +74,14 @@ function CreateForm() {
         <div className="text-center" style={{ marginTop: "10px" }}>
           <button type="submit" className="btn btn-lg btn-primary text-center">
             Submit
+          </button>
+          <button
+            type="button"
+            className="btn btn-lg btn-secondary text-center"
+            style={{ marginLeft: "10px" }}
+            onClick={handleClick}
+          >
+            Back
           </button>
         </div>
       </form>

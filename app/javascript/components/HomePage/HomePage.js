@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import Table from "../Table/Table";
 
@@ -21,11 +22,29 @@ function HomePage() {
       .catch((resp) => console.log(resp));
   };
 
+
   return (
-    <div className="py-4">
-      <h1 className="text-center">Home Page</h1>
-      <Table imagesList={imageData} deleteHandler={deleteHandler} />
-    </div>
+    <Fragment>
+      <div className="py-4">
+        <h1 className="text-center">Home Page</h1>
+        <Table imagesList={imageData} deleteHandler={deleteHandler} />
+      </div>
+      <Link
+        type="button"
+        to='/new'
+        style={{
+          position: "fixed",
+          right: "30px",
+          bottom: "30px",
+          float: "right",
+          zIndex: "1000",
+          textDecoration: 'none'
+        }}
+        className="btn btn-success"
+      >
+        New
+      </Link>
+    </Fragment>
   );
 }
 
