@@ -10,6 +10,8 @@ function Registration(props) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    const csrfToken = document.querySelector("[name=csrf-token]").content;
+    axios.defaults.headers.common["X-CSRF-TOKEN"] = csrfToken;
     axios
       .post(
         "http://localhost:3000/api/v1/registrations",
@@ -38,14 +40,13 @@ function Registration(props) {
 
   return (
     <div className="container">
-      <h2>{props.loggedInStatus}</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="email">Email address</label>
           <input
             type="email"
             className="form-control"
-            id="email"
+            id="regemail"
             name="email"
             value={register.email}
             onChange={handleChange}
@@ -57,7 +58,7 @@ function Registration(props) {
           <input
             type="password"
             className="form-control"
-            id="password"
+            id="regpassword"
             name="password"
             value={register.password}
             onChange={handleChange}
@@ -69,7 +70,7 @@ function Registration(props) {
           <input
             type="password"
             className="form-control"
-            id="passwordconf"
+            id="regpasswordconf"
             name="password_confirmation"
             value={register.password_confirmation}
             onChange={handleChange}

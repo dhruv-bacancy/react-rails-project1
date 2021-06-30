@@ -1,8 +1,10 @@
 import React, { useEffect, useState, Fragment } from "react";
 import axios from "axios";
+import { useHistory } from "react-router-dom";
 import UpdateForm from "./UpdateForm/UpdateForm";
 
 function Image(props) {
+  const history = useHistory();
   const [image, setImage] = useState({
     name: "",
     image_url: "",
@@ -15,20 +17,24 @@ function Image(props) {
   axios.defaults.headers.common["X-CSRF-TOKEN"] = csrfToken;
 
   useEffect(() => {
-    const id = props.match.params.id;
-    const url = `http://localhost:3000/api/v1/images/${id}`;
-    axios
-      .get(url)
-      .then((response) => {
-        if(response.data.present == false) {
-          setNoData(true);
-        } else {
-          setImage(response.data.data.attributes);
-          setIsLoaded(true);
-        }
-      })
-      .catch((response) => console.log(response));
-  }, []);
+    if (props.loggedInStatus === "NOT_LOGGED_IN") {
+      history.push("/authenticate");
+    } else {
+      const id = props.match.params.id;
+      const url = `http://localhost:3000/api/v1/images/${id}`;
+      axios
+        .get(url)
+        .then((response) => {
+          if (response.data.present == false) {
+            setNoData(true);
+          } else {
+            setImage(response.data.data.attributes);
+            setIsLoaded(true);
+          }
+        })
+        .catch((response) => console.log(response));
+    }
+  }, [props.loggedInStatus]);
 
   const handleSubmit = (e) => {
     setImage(e);
@@ -40,8 +46,12 @@ function Image(props) {
       .catch((resp) => console.log(resp));
   };
 
-  if(noData) {
-    return <h1 className="alert alert-danger mt-5" role="alert">No Data Present</h1>
+  if (noData) {
+    return (
+      <h1 className="alert alert-danger mt-5" role="alert">
+        No Data Present
+      </h1>
+    );
   }
 
   return (
@@ -52,7 +62,7 @@ function Image(props) {
           <div
             className="card shadow text-center bg-dark text-white"
             style={{ width: "350px", marginTop: "120px" }}
-            >
+          >
             <div className="text-center">
               <img
                 className="card-img-top"

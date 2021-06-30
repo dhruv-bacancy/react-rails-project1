@@ -1,24 +1,40 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import HomePage from "../HomePage/HomePage";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Image from "../Image";
 import CreateForm from "../CreateForm/CreateForm";
-import Registration from "./Registration";
-import Login from "./Login";
+import Authenticate from "./Authenticate";
 import axios from "axios";
+import NoPageFound from "../NoPageFound/NoPageFound";
 
-function Authentication(props) {
+function Authentication() {
   const [logStatus, setLogStatus] = useState({
     loggedInStatus: "NOT_LOGGED_IN",
     user: {},
   });
 
+  const csrfToken = document.querySelector("[name=csrf-token]").content;
+  axios.defaults.headers.common["X-CSRF-TOKEN"] = csrfToken;
+
   const handleLogin = (data) => {
-    console.log(data);
     setLogStatus({
       loggedInStatus: "LOGGED_IN",
       user: data.user,
     });
+  };
+
+  const handleLogout = () => {
+    axios
+      .delete("http://localhost:3000/api/v1/logout", { withCredentials: true })
+      .then(() => {
+        setLogStatus({
+          loggedInStatus: "NOT_LOGGED_IN",
+          user: {},
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   function checkLoginStatus() {
@@ -50,52 +66,57 @@ function Authentication(props) {
 
   useEffect(() => {
     checkLoginStatus();
-  }, [logStatus.loggedInStatus]);
-
-  const handleLogout = () => {
-    axios
-      .delete("http://localhost:3000/api/v1/logout", { withCredentials: true })
-      .then(() => {
-        setLogStatus({
-          loggedInStatus: "NOT_LOGGED_IN",
-          user: {},
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+  }, []);
 
   return (
     <BrowserRouter>
       <div className="container">
         <Switch>
-          <Route exact path="/" component={HomePage} />
           <Route
             path="/authenticate"
             render={(props) => (
-              <Registration
+              <Authenticate
                 {...props}
                 loggedInStatus={logStatus.loggedInStatus}
                 handleLogin={handleLogin}
-                user={logStatus.user}
               />
             )}
           />
           <Route
-            path="/login"
+            exact
+            path="/"
             render={(props) => (
-              <Login
+              <HomePage
                 {...props}
                 loggedInStatus={logStatus.loggedInStatus}
-                handleLogin={handleLogin}
-                user={logStatus.user}
                 handleLogout={handleLogout}
               />
             )}
           />
-          <Route path="/image/:id" component={Image} />
-          <Route path="/new" component={CreateForm} />
+
+          <Route
+            exact
+            path="/image/:id"
+            render={(props) => (
+              <Image
+                {...props}
+                loggedInStatus={logStatus.loggedInStatus}
+                handleLogout={handleLogout}
+              />
+            )}
+          />
+          <Route
+            exact
+            path="/new"
+            render={(props) => (
+              <CreateForm
+                {...props}
+                loggedInStatus={logStatus.loggedInStatus}
+                handleLogout={handleLogout}
+              />
+            )}
+          />
+          <Route path="*" component={NoPageFound} />
         </Switch>
       </div>
     </BrowserRouter>

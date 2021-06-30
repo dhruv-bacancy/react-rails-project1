@@ -1,14 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 
-function CreateForm() {
+function CreateForm(props) {
   const [image, setImage] = useState({
     name: "",
     image_url: "",
     description: "",
   });
   const history = useHistory();
+
+  useEffect(() => {
+    if (props.loggedInStatus === "NOT_LOGGED_IN") {
+      history.push("/authenticate");
+    }
+  }, [props.loggedInStatus]);
+
   const handleChange = (e) => {
     e.preventDefault();
     setImage({ ...image, [e.target.name]: e.target.value });
@@ -29,7 +36,7 @@ function CreateForm() {
     history.goBack();
   };
   return (
-    <div className="container  col-md-8" style={{marginTop: '30px'}}>
+    <div className="container  col-md-8" style={{ marginTop: "30px" }}>
       <form onSubmit={handleSubmit}>
         <h2 className="text-center">Create New Image</h2>
         <div className="form-group">

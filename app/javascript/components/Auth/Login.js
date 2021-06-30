@@ -9,6 +9,8 @@ function Login(props) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    const csrfToken = document.querySelector("[name=csrf-token]").content;
+    axios.defaults.headers.common["X-CSRF-TOKEN"] = csrfToken;
     axios
       .post(
         "http://localhost:3000/api/v1/sessions",
@@ -35,14 +37,8 @@ function Login(props) {
     setLog({ ...log, [event.target.name]: event.target.value });
   };
 
-  const handleLogoutClick = () => {
-    props.handleLogout();
-  };
-
-  console.log(props.user);
   return (
     <div className="container">
-      <h2>{props.loggedInStatus}</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="email">Email address</label>
@@ -72,7 +68,6 @@ function Login(props) {
           Login
         </button>
       </form>
-      <button onClick={handleLogoutClick}>Logout</button>
     </div>
   );
 }

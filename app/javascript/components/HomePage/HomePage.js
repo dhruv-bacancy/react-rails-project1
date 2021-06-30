@@ -3,14 +3,18 @@ import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
 import Table from "../Table/Table";
 
-function HomePage() {
-  const [imageData, setImageData] = useState([]);
+function HomePage(props) {
   const history = useHistory();
+  const [imageData, setImageData] = useState([]);
   useEffect(() => {
-    axios.get("http://localhost:3000/api/v1/images.json").then((response) => {
-      setImageData(response.data.data);
-    });
-  }, []);
+    if (props.loggedInStatus === "NOT_LOGGED_IN") {
+      history.push("/authenticate");
+    } else if (props.loggedInStatus === "LOGGED_IN") {
+      axios.get("http://localhost:3000/api/v1/images.json").then((response) => {
+        setImageData(response.data.data);
+      });
+    }
+  }, [props.loggedInStatus]);
 
   const deleteHandler = (id) => {
     setImageData(imageData.filter((img) => img.id != id));
@@ -22,7 +26,6 @@ function HomePage() {
       .catch((resp) => console.log(resp));
   };
 
-
   return (
     <Fragment>
       <div className="py-4">
@@ -31,19 +34,20 @@ function HomePage() {
       </div>
       <Link
         type="button"
-        to='/new'
+        to="/new"
         style={{
           position: "fixed",
           right: "30px",
           bottom: "30px",
           float: "right",
           zIndex: "1000",
-          textDecoration: 'none'
+          textDecoration: "none",
         }}
         className="btn btn-success"
       >
         New
       </Link>
+      <button onClick={props.handleLogout}>Logout</button>
     </Fragment>
   );
 }
