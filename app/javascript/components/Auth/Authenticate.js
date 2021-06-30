@@ -13,7 +13,7 @@ function Authenticate(props) {
   }, [props.loggedInStatus]);
 
   return (
-    <div className="container">
+    <div className="row" style={{ marginTop: "50px" }}>
       <Registration handleLogin={props.handleLogin} />
 
       <Login handleLogin={props.handleLogin} />

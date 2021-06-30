@@ -13,9 +13,6 @@ function Image(props) {
   const [isLoaded, setIsLoaded] = useState(false);
   const [noData, setNoData] = useState(false);
 
-  const csrfToken = document.querySelector("[name=csrf-token]").content;
-  axios.defaults.headers.common["X-CSRF-TOKEN"] = csrfToken;
-
   useEffect(() => {
     if (props.loggedInStatus === "NOT_LOGGED_IN") {
       history.push("/authenticate");

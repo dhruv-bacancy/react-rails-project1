@@ -9,8 +9,6 @@ function Login(props) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const csrfToken = document.querySelector("[name=csrf-token]").content;
-    axios.defaults.headers.common["X-CSRF-TOKEN"] = csrfToken;
     axios
       .post(
         "http://localhost:3000/api/v1/sessions",
@@ -38,8 +36,9 @@ function Login(props) {
   };
 
   return (
-    <div className="container">
+    <div className="col shadow rounded mx-4 py-2">
       <form onSubmit={handleSubmit}>
+        <h2 className="text-center">Login</h2>
         <div className="form-group">
           <label htmlFor="email">Email address</label>
           <input
@@ -64,7 +63,7 @@ function Login(props) {
             placeholder="Password"
           />
         </div>
-        <button type="submit" className="btn btn-primary">
+        <button type="submit" className="btn btn-primary mt-3">
           Login
         </button>
       </form>

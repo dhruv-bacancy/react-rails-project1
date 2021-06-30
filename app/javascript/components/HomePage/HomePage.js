@@ -18,8 +18,6 @@ function HomePage(props) {
 
   const deleteHandler = (id) => {
     setImageData(imageData.filter((img) => img.id != id));
-    const csrfToken = document.querySelector("[name=csrf-token]").content;
-    axios.defaults.headers.common["X-CSRF-TOKEN"] = csrfToken;
     axios
       .delete(`http://localhost:3000/api/v1/images/${id}`)
       .then((resp) => console.log(resp))
@@ -47,7 +45,21 @@ function HomePage(props) {
       >
         New
       </Link>
-      <button onClick={props.handleLogout}>Logout</button>
+      <Link
+        type="button"
+        style={{
+          position: "fixed",
+          right: "30px",
+          bottom: "80px",
+          float: "right",
+          zIndex: "1000",
+          textDecoration: "none",
+        }}
+        className="btn btn-danger"
+        onClick={props.handleLogout}
+      >
+        Logout
+      </Link>
     </Fragment>
   );
 }

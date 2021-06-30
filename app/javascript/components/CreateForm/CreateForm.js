@@ -23,8 +23,6 @@ function CreateForm(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const csrfToken = document.querySelector("[name=csrf-token]").content;
-    axios.defaults.headers.common["X-CSRF-TOKEN"] = csrfToken;
     axios
       .post("http://localhost:3000/api/v1/images", image)
       .then((resp) => console.log(resp))
