@@ -24,12 +24,12 @@ module Api
       def logged_in
         if @current_user
           render json: {
-            loggged_in: true,
+            logged_in: true,
             user: @current_user
           }
         else
           render json: {
-            loggged_in: false
+            logged_in: false
           }
         end
       end
